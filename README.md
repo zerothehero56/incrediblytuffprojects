@@ -1,6 +1,6 @@
-# incrediblytuffprojects
-so tuff 🤤🤤🤤
-
-project 1:
-maze.py
-
+# Maze Game
+before playing,
+do this command in cmd.exe
+''
+pip install pygame
+''
