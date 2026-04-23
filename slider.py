@@ -94,24 +94,21 @@ def slider():
         title = font.render("DIFFICULTY", True, cfg.THEME['title'])
         cfg.screen.blit(title, title.get_rect(center=(cfg.WINDOW_W // 2, 80)))
 
-        # Determine difficulty label and color based on size
+        # Determine difficulty label, color, and reward based on size tier.
         if current == 1:
-            diff_label = "Impossible"; diff_col = (220, 75, 75)
+            diff_label = "Impossible"; diff_col = (220, 75, 75); state.winz = 7
         elif current <= 10:
-            diff_label = "Easy";      diff_col = (95, 205, 120)
+            diff_label = "Easy";      diff_col = (95, 205, 120); state.winz = 1
         elif current <= 20:
-            diff_label = "Medium";    diff_col = (245, 200, 95)
+            diff_label = "Medium";    diff_col = (245, 200, 95); state.winz = 2
         elif current <= 40:
-            diff_label = "Hard";      diff_col = (245, 155, 95)
+            diff_label = "Hard";      diff_col = (245, 155, 95); state.winz = 3
         elif current <= 60:
-            diff_label = "Insane";    diff_col = (230, 100, 100)
+            diff_label = "Insane";    diff_col = (230, 100, 100); state.winz = 4
         elif current < 75:
-            diff_label = "Crazy";     diff_col = (110, 170, 255)
+            diff_label = "Crazy";     diff_col = (110, 170, 255); state.winz = 5
         else:
-            diff_label = "Mentally Unstable"; diff_col = (190, 130, 255)
-
-        # Scale reward by maze size so larger mazes always pay more.
-        state.winz = max(1, current - 4)
+            diff_label = "Mentally Unstable"; diff_col = (190, 130, 255); state.winz = 6
 
         # Override winz if noclip
         if state.noclip == 1:

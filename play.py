@@ -61,7 +61,19 @@ def maybe_play_step_sound(steps):
 def get_win_reward(size):
     if state.noclip == 1:
         return 0
-    return max(1, size - 4)
+    if size == 1:
+        return 7
+    if size <= 10:
+        return 1
+    if size <= 20:
+        return 2
+    if size <= 40:
+        return 3
+    if size <= 60:
+        return 4
+    if size < 75:
+        return 5
+    return 6
 
 
 # Function to initialize a new game with given columns and rows
