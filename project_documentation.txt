@@ -1,0 +1,221 @@
+Project Documentation: Maze Game
+
+Statement of Intent
+
+Overview:
+The Maze Game is a 2D casual maze navigation experience designed to provide engaging, accessible entertainment for players seeking a simple yet rewarding way to pass time. The game combines straightforward, intuitive mechanics with extensive customization options and varying difficulty levels to appeal to a broad audience looking for casual gaming experiences. Whether players are looking for a quick 5-minute diversion or an extended gaming session, the Maze Game adapts to their preferences and play style. The project emphasizes accessibility, replayability, and player agency, allowing individuals to engage with the game at their own pace without pressure or time constraints beyond optional performance tracking.
+
+Description of the Game/Simulation:
+The Maze Game is a 2D casual maze navigation game where players navigate through procedurally generated mazes to reach a designated goal. The objective is to explore and find the green goal square while avoiding walls that obstruct the path. The game features multiple difficulty levels accessed through an intuitive difficulty slider (ranging from 10x10 to 30x30 maze sizes), diverse character skins for visual customization and self-expression, and a persistent scoring system based on wins that rewards player progression. Each maze is uniquely generated using recursive backtracking algorithms, a sophisticated procedural generation technique that ensures varied, organic-feeling gameplay experiences across multiple playthroughs. No two mazes are identical, providing effectively unlimited content for extended play.
+
+Core Gameplay Mechanics:
+Players control a character through procedurally generated labyrinths using arrow keys or directional input, navigating around obstacles and walls to reach the goal square. The game emphasizes exploration and discovery over strict time pressure, though players can challenge themselves by improving their personal records if desired. The system tracks comprehensive performance metrics including time elapsed and steps taken, providing immediate visual feedback through on-screen HUD elements that inform players of their current performance without creating stress. A dynamic camera system follows the player, allowing exploration of larger mazes on smaller screens while maintaining visual clarity and immersion. The game rewards successful completion through win tracking and cosmetic rewards, while maintaining a fundamentally pressure-free environment that encourages experimentation, exploration, and self-directed challenge-setting.
+
+Key Features:
+- Procedurally generated mazes using recursive backtracking, ensuring unique and organic-feeling gameplay each session
+- Adjustable difficulty levels through intuitive maze size slider (10x10 to 30x30 grid sizes)
+- Multiple character skins for visual customization and personal expression
+- Comprehensive performance tracking with step counts, time measurements, and personal best records
+- Persistent win counter recording total achievements and progress
+- Customizable audio feedback and sound settings allowing player control over audio experience
+- Comprehensive tutorial system introducing game mechanics to new players
+- Smooth, responsive directional controls with fluid character movement
+- Settings menu for audio, visual, and gameplay preferences
+- Skin shop allowing collection and selection of different character appearances
+
+Audience:
+This game is designed for players aged 10-20 who enjoy casual gaming and want to pass the time in a structured, engaging way. The game provides accessible entertainment for anyone interested in maze navigation without requiring complex strategy understanding or extensive time investment. The audience encompasses a diverse range of players: younger children discovering casual gaming, teenagers seeking quick entertainment between activities, casual gamers looking for low-stress gameplay, and players who enjoy personal achievement and self-improvement through performance tracking. The game appeals equally to competitive players seeking to optimize their times and improve personal records, and to casual explorers simply enjoying the mazes and collecting cosmetic upgrades for their characters. The adjustable difficulty ensures both newcomers and experienced players find appropriate challenges.
+
+Design Philosophy:
+The game follows a philosophy of accessibility through simplicity paired with depth through choice and customization. Rather than complex mechanics, the game excels through polish, visual clarity, and a respectful approach to player time. Mechanics are immediately understandable, allowing players to begin enjoying the game within seconds of launching. The core loop—navigate maze, reach goal, track performance, customize appearance, repeat—is intuitive yet supports extended engagement through difficulty progression and cosmetic collection.
+
+Engagement Strategy:
+Multiple systems work together to maintain player interest over time. The win counter provides long-term progression goals and motivation to return. Difficulty adjustments let players progressively challenge themselves or restart at easier levels. The skin collection system gives players cosmetic goals and a sense of visual progression. Performance tracking enables self-directed challenges where players compete against their own records. These systems combine to create natural replay incentives without pressure mechanics, artificial time limits, or exploitative progression systems.
+
+Design Goals:
+The primary goal is to create an accessible, low-pressure gaming experience that combines intuitive mechanics with enough variety and customization to maintain player interest across multiple play sessions. The game prioritizes genuine fun and engagement over complex strategy or intensive puzzle-solving mechanics that might alienate casual players. By offering adjustable difficulty through maze size selection and visual customization through character skins, the game caters to a wide range of skill levels, preferences, and play styles, making it approachable for newcomers while still providing meaningful challenges for experienced players. A secondary goal is to ensure the game respects player time—while designed to be replayed, it never punishes players who take breaks or play infrequently. The game succeeds when players voluntarily return because they genuinely enjoy the experience, not because of mandatory daily rewards or frustrating progression mechanics.
+
+---
+
+Storyboard
+
+Page 1: Main Menu
+- Display title "Titled Maze Game"
+- Show wins counter
+- Buttons: Play, Settings, Skins, Tutorial, Quit
+- Background gradient from dark blue to black
+
+Page 2: Difficulty Selection
+- Slider to choose maze size (e.g., 10x10 to 30x30)
+- Confirm button
+- Back to menu option
+
+Page 3: Gameplay
+- Maze view with player (yellow circle), walls (dark), goal (green)
+- HUD showing time and steps
+- Camera follows player
+
+Page 4: Win Screen
+- Congratulatory message
+- Stats: steps, time, reward
+- Buttons: Restart, Menu, Change Difficulty
+
+Page 5: Skins Menu
+- Grid of available skins
+- Buy/equip options
+- Scrollable if many skins
+
+---
+
+IPO Diagrams
+
+Function 1: generate_maze(cols, rows)
+Input: cols (integer), rows (integer)
+Process: 
+- Create grid of cells
+- Use recursive backtracking to carve paths
+- Ensure all cells are visited
+Output: grid (list of Cell objects)
+
+Function 2: draw_maze(surface, grid, cell_size, cam_x, cam_y)
+Input: surface (pygame Surface), grid (list), cell_size (int), cam_x (float), cam_y (float)
+Process:
+- For each cell in grid:
+  - Calculate screen position based on camera
+  - Draw background rectangle
+  - Draw walls as lines if present
+Output: None (draws to surface)
+
+---
+
+Decision Tree Diagram for 1 Function
+
+Function: can_move_from_cell(cell, dx, dy)
+- If dx == 1 (moving right):
+  - If cell.walls[1] == True: Cannot move
+  - Else: Can move
+- If dx == -1 (moving left):
+  - If cell.walls[3] == True: Cannot move
+  - Else: Can move
+- If dy == 1 (moving down):
+  - If cell.walls[2] == True: Cannot move
+  - Else: Can move
+- If dy == -1 (moving up):
+  - If cell.walls[0] == True: Cannot move
+  - Else: Can move
+- Else: Cannot move
+
+---
+
+Flowchart for 1 Function
+
+Function: mainmenu()
+Start
+-> Initialize clock, running = True
+-> Load sounds, stop music
+-> While running:
+  -> Tick clock
+  -> Get mouse position
+  -> Check button hovers
+  -> Draw background
+  -> Draw title and subtitle
+  -> Draw buttons
+  -> Flip display
+  -> Handle events:
+    -> If QUIT: exit
+    -> If VIDEORESIZE: update window size
+    -> If MOUSEBUTTONDOWN:
+      -> If play: call slider()
+      -> If skins: call skinmenu()
+      -> If settings: call settingsmenu()
+      -> If tutorial: call tutorialmenu()
+      -> If quit: exit
+    -> If KEYDOWN:
+      -> Handle shortcuts
+-> End
+
+---
+
+Sample Code
+
+Function 1: new_game(cols, rows)
+# Initialize a new game with given maze dimensions
+def new_game(cols, rows):
+    # Generate the maze grid
+    grid = generate_maze(cols, rows)
+    # Set player start position
+    player = [0, 0]
+    # Set goal at bottom-right
+    goal = [cols - 1, rows - 1]
+    # Record start time
+    start_t = time.time()
+    # Calculate smooth player position
+    spx = float(0 * CELL_SIZE + CELL_SIZE // 2)
+    spy = float(0 * CELL_SIZE + CELL_SIZE // 2)
+    # Calculate camera offsets
+    csx = float(max(0, spx - WINDOW_W // 2))
+    csy = float(max(0, spy - VIEW_H // 2))
+    # Return initial state
+    return grid, player, goal, start_t, False, 0, False, False, spx, spy, csx, csy
+
+This function sets up the initial state for a new maze game, including generating the maze, positioning the player and goal, and initializing camera and timing variables.
+
+Function 2: clamp_smooth_position(smooth_px, smooth_py, player, grid, cols, rows, cell_size)
+# Constrain smooth position to valid areas
+def clamp_smooth_position(smooth_px, smooth_py, player, grid, cols, rows, cell_size):
+    # Get current cell
+    player_col, player_row = player
+    player_idx = grid_index(player_col, player_row, cols, rows)
+    if player_idx is None:
+        return smooth_px, smooth_py
+    player_cell = grid[player_idx]
+    
+    # Determine target cell
+    smooth_col = int(smooth_px / cell_size)
+    smooth_row = int(smooth_py / cell_size)
+    
+    # Clamp to bounds
+    smooth_col = max(0, min(cols - 1, smooth_col))
+    smooth_row = max(0, min(rows - 1, smooth_row))
+    
+    # If same cell, allow free movement
+    if smooth_col == player_col and smooth_row == player_row:
+        return smooth_px, smooth_py
+    
+    # Check direction
+    col_offset = smooth_col - player_col
+    row_offset = smooth_row - player_row
+    
+    # Prevent diagonal cuts
+    if abs(col_offset) > 1 or abs(row_offset) > 1:
+        smooth_col = player_col + (1 if col_offset > 0 else -1 if col_offset < 0 else 0)
+        smooth_row = player_row + (1 if row_offset > 0 else -1 if row_offset < 0 else 0)
+    
+    # Check for wall
+    has_wall = False
+    if smooth_col > player_col and player_cell.walls[1]:
+        has_wall = True
+    elif smooth_col < player_col and player_cell.walls[3]:
+        has_wall = True
+    elif smooth_row > player_row and player_cell.walls[2]:
+        has_wall = True
+    elif smooth_row < player_row and player_cell.walls[0]:
+        has_wall = True
+    
+    if has_wall:
+        # Snap to cell center
+        return float(player_col * cell_size + cell_size // 2), float(player_row * cell_size + cell_size // 2)
+    
+    return smooth_px, smooth_py
+
+This function ensures the player's smooth position doesn't clip through walls by checking adjacent cells and constraining movement.
+
+---
+
+Inclusion of Literacy & Numeracy
+
+Literacy:
+The game includes text-based menus, tutorials, and instructions that require reading comprehension. Players read the tutorial to understand controls and objectives, promoting literacy skills. Button labels and messages use clear, concise language appropriate for year 9-10 students.
+
+Numeracy:
+The game incorporates numerical elements such as step counts, time measurements, and win rewards. Players calculate optimal paths, track progress numerically, and make decisions based on numerical data (e.g., cost of skins). The scoring system encourages mathematical thinking about efficiency and strategy.
